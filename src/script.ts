@@ -30,8 +30,7 @@ async function main() {
                     title: '',
                     description: '',
                     created_at:new Date().toISOString(),
-                    updated_at: new Date().toISOString(),
-                    completed_at: undefined
+                    updated_at: new Date().toISOString()
                 },
             },
         },

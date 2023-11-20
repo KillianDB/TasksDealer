@@ -1,6 +1,6 @@
 import Tasks from './database.ts'
 
-async function criarTask(task) {
+async function criarTask(task: any) {
     try {
       let novaTask = await Tasks.create(
         { ...task }
@@ -24,7 +24,7 @@ async function criarTask(task) {
       }
   }
        
-  async function mostrarTaskPesquisada(pesquisa){
+  async function mostrarTaskPesquisada(pesquisa: String){
     try{
     const task = await Tasks.findOne(pesquisa)
 
@@ -35,7 +35,7 @@ async function criarTask(task) {
       }
   }
       
-  async function editarTask(id_task, data) {
+  async function editarTask(id_task: String, data: any) {
     try{
     const task = await Tasks.update(data, {where: {id: id_task}})
 
@@ -46,7 +46,7 @@ async function criarTask(task) {
       }
   }
   
- async function deletarTask(id_task){
+ async function deletarTask(id_task: String){
     try{
         const task = await Tasks.delete({where:{id: id_task}})
 
@@ -57,7 +57,7 @@ async function criarTask(task) {
       }
  }
   
- async function concluirTask(id_task, date){
+ async function concluirTask(id_task: String, date: Date){
     try{
         const task = await Tasks.update(date, {where: {id: id_task}})
     }catch (e) {
