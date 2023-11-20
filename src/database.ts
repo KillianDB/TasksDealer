@@ -1,4 +1,4 @@
-export class Task {
+export default class Tasks {
     tasks = {
         id: String,
         title: String,

@@ -1,5 +1,6 @@
 import { error } from 'console';
 import { randomUUID } from 'crypto';
+import { criarTask, listarTasks,mostrarTaskPesquisada,editarTask,deletarTask,concluirTask } from './server.ts'
 
 const Controller = {
   // - `POST - /tasks`
@@ -7,16 +8,16 @@ const Controller = {
   //     Deve ser possível criar uma task no banco de dados, enviando os campos `title` e `description` por meio do `body` da requisição.
 
   //     Ao criar uma task, os campos: `id`, `created_at`, `updated_at` e `completed_at` devem ser preenchidos automaticamente, conforme a orientação das propriedades acima.
-  criaTask: async (req, res) => {
+  criaTask: async (req: { body: { title: string; description: string; }; }, res: { render: (arg0: string, arg1: { task: any; }) => any; }) => {
     const title = JSON.parse(req.body.title)
     const description = JSON.parse(req.body.description)
     try {
-      const task = await criarTask({
+      const task = criarTask({
         id_task: randomUUID(),
         title_task: title,
         description_task: description,
-        created_at:Date.now(),
-        updated_at:Date.now(),
+        created_at: Date.now(),
+        updated_at: Date.now(),
         completed_at: null
       })
       return res.render('task criada', { task })
@@ -31,16 +32,16 @@ const Controller = {
 
   //     Também deve ser possível realizar uma busca, filtrando as tasks pelo `title` e `description`
 
-  listaTasks: async (req, res) => {
+  listaTasks: async (req: { query: { busca: any; }; }, res: { render: (arg0: any) => void; }) => {
     try{
     const pesquisa = req.query.busca
 
       if(pesquisa==null||pesquisa==undefined||pesquisa==''){
-      const lista = await listarTasks()
+      const lista = listarTasks()
       
       res.render(lista)
       }else{
-    const lista = await mostrarTaskPesquisada(pesquisa)
+    const lista = mostrarTaskPesquisada(pesquisa)
 
       res.render(lista)
   }
@@ -59,18 +60,22 @@ const Controller = {
 
   //     Antes de realizar a atualização, deve ser feito uma validação se o `id` pertence a uma task salva no banco de dados.
 
-  atualizarTask: async (req, res) => {
+  atualizarTask: async (req: {
+    params: any; body: { title: string; description: string; }; 
+}, res: { render: (arg0: any) => void; }) => {
     const title = JSON.parse(req.body.title)
     const description = JSON.parse(req.body.description)
 
     try{
+      const id_task = req.params.id
+      
       if(id_task){
         const data = {
         title_task: title,
         description_task: description,
         updated_at:Date.now()
       }
-      const mudancaTask = await editarTask(id_task, data)
+      const mudancaTask = editarTask(id_task, data)
       res.render(mudancaTask)
     }else{
         console.log("id não encontrado")
@@ -85,8 +90,10 @@ const Controller = {
   //     Deve ser possível remover uma task pelo `id`.
 
   //     Antes de realizar a remoção, deve ser feito uma validação se o `id` pertence a uma task salva no banco de dados.
-  deletaTask: async(req, res)=>{
+  deletaTask: async(req: any, res: { render: (arg0: string) => void; })=>{
     try{
+      const id_task = req.params.id
+
       if(id_task){
     const deleteTask = await deletarTask(id_task)
     res.render("Task "+deleteTask+" deletada com sucesso")}
@@ -96,8 +103,10 @@ const Controller = {
   },
 
   // - `PATCH - /tasks/:id/complete`
-concluiTask: async(req, res)=>{
+concluiTask: async(req: any, res: { render: (arg0: string) => void; })=>{
   try{
+    const id_task = req.params.id
+    
     if(id_task){
       const date ={
         completed_at: Date.now()

@@ -1,8 +1,8 @@
-import Task from './database'
+import Tasks from './database.ts'
 
 async function criarTask(task) {
     try {
-      let novaTask = await Task.create(
+      let novaTask = await Tasks.create(
         { ...task }
       )
   
@@ -15,7 +15,7 @@ async function criarTask(task) {
          
   async function listarTasks() {
     try{
-    const tasks = await Task.findAll()
+    const tasks = await Tasks.findAll()
 
     return tasks
 } catch (e) {
@@ -26,7 +26,7 @@ async function criarTask(task) {
        
   async function mostrarTaskPesquisada(pesquisa){
     try{
-    const task = await Task.findOne(pesquisa)
+    const task = await Tasks.findOne(pesquisa)
 
     return task
 } catch (e) {
@@ -37,7 +37,7 @@ async function criarTask(task) {
       
   async function editarTask(id_task, data) {
     try{
-    const task = await Task.update(data, {where: {id: id_task}})
+    const task = await Tasks.update(data, {where: {id: id_task}})
 
     return task
 } catch (e) {
@@ -48,7 +48,7 @@ async function criarTask(task) {
   
  async function deletarTask(id_task){
     try{
-        const task = await Task.delete({where:{id: id_task}})
+        const task = await Tasks.delete({where:{id: id_task}})
 
         return task
     } catch (e) {
@@ -59,7 +59,7 @@ async function criarTask(task) {
   
  async function concluirTask(id_task, date){
     try{
-        const task = await Task.update(date, {where: {id: id_task}})
+        const task = await Tasks.update(date, {where: {id: id_task}})
     }catch (e) {
         console.log(e);
         throw new Error(e);
