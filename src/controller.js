@@ -11,7 +11,7 @@ const Controller = {
     const title = JSON.parse(req.body.title)
     const description = JSON.parse(req.body.description)
     try {
-      const task = await criaTask({
+      const task = await criarTask({
         id_task: randomUUID(),
         title_task: title,
         description_task: description,
@@ -65,11 +65,12 @@ const Controller = {
 
     try{
       if(id_task){
-      const mudancaTask = await editaTask(id_task,{
+        const data = {
         title_task: title,
         description_task: description,
         updated_at:Date.now()
-      })
+      }
+      const mudancaTask = await editarTask(id_task, data)
       res.render(mudancaTask)
     }else{
         console.log("id não encontrado")
@@ -98,9 +99,10 @@ const Controller = {
 concluiTask: async(req, res)=>{
   try{
     if(id_task){
-      const concluida = await concluirTask(id_task, {
+      const date ={
         completed_at: Date.now()
-      })
+      }
+      const concluida = await concluirTask(id_task, date)
 
       res.render("Parabéns! Você concluiu a task "+concluida)
     }
