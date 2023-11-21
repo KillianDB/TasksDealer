@@ -9,10 +9,11 @@
   "author": "Killian D.B.",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^20.9.2",
+    "@types/node": "^20.9.3",
     "prisma": "^5.6.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.2",
+    "vitest": "^0.34.6"
   },
   "dependencies": {
     "@prisma/client": "^5.6.0"

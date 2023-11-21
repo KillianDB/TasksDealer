@@ -1,19 +1,41 @@
-import { randomUUID } from "crypto"
+import { Slug } from "./value-objects/slug"
+import { Entity } from "../../core/entities/entity"
+import { UniqueEntityId } from "../../core/entities/unique-entity-id"
 
-export class Tasks{
-    public id: string
-    public title: string
-    public description: string
-    public created_at: string
-    public updated_at: string
-    public completed_at: string
+interface TaskProps {
+    userId: UniqueEntityId
+    slug: Slug
+    name: string
+    description: string
+    createdAt: Date 
+    updatedAt: Date
+    completedAt?: Date
+}
 
-    constructor(id: string, title: string, description: string, created_at: string, updated_at: string, completed_at: string) {
-        this.id = id ?? randomUUID()
-        this.title = title
-        this.description = description
-        this.created_at = new Date().toISOString()
-        this.updated_at = new Date().toISOString()
-        this.completed_at = ''
-    }
+export class Task extends Entity <TaskProps>{
+
+    // editTask(userId: string, id: string, title?: string, description?: string) {
+    //     if(this.userId == userId){
+    //     // if(this.id == id){
+    //         if(title){
+    //             this.title = title
+    //             this.updated_at = new Date().toISOString()
+    //         }
+
+    //         if(description){
+    //             this.description = description
+    //             this.updated_at = new Date().toISOString()
+    //         }
+    //     // }
+    // }
+    // }
+
+    // completeTask(userId: string, id: string) {
+    //     if(this.userId == userId){
+    //     // if(this.id == id){
+    //         this.updated_at = new Date().toISOString()
+    //         this.completed_at = new Date().toISOString()
+    //     // }
+    // }
+    // }
 }
